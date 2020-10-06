@@ -21,13 +21,7 @@
     </parent>
 
     <modules>
-        <module>springboot2websocket</module>
         <module>javaUtils</module>
-        <module>dubbo-service</module>
-        <module>dubbo-client</module>
-        <module>netty-rpc-server</module>
-        <module>netty-rpc-client</module>
-        <module>netty-rpc-common</module>
     </modules>
 
     <properties>
