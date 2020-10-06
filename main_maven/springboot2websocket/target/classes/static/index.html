@@ -1,0 +1,64 @@
+<html>
+<head>
+    <title>Hello WebSocket</title>
+    <script src="/webjars/jquery/jquery.min.js"></script>
+    <script>
+
+        function testwebsocket() {
+            var socket;
+            if (typeof (WebSocket) == "undefined") {
+                console.log("your browser not support WebSocket");
+            } else {
+                console.log("your browser support webSocket");
+                //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+                socket = new WebSocket("ws://localhost:8087/websocket/" + document.getElementById("inputValId").value);
+                //打开事件
+                socket.onopen = function () {
+                    console.log("Socket is open");
+                    socket.send("this is from client info : " + location.href + new Date());
+                };
+                //获得消息事件
+                socket.onmessage = function (msg) {
+                    console.log(msg.data, "aaaabbbbbb4654646");
+                    //发现消息进入    开始处理前端触发逻辑
+                    $("#greetings").append("<tr><td>" + msg.data + "</td></tr>");
+                };
+                //关闭事件
+                socket.onclose = function () {
+                    console.log("Socket is close");
+                };
+                //发生了错误事件
+                socket.onerror = function () {
+                    console.log("Socket is error");
+                    //此时可以尝试刷新页面
+                }
+                //离开页面时，关闭socket
+                //jquery1.8中已经被废弃，3.0中已经移除
+                // $(window).unload(function(){
+                //     socket.close();
+                //});
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div>
+    <div>
+        <input type="text" id="inputValId"/>
+        <button onclick="testwebsocket()">Connect</button>
+    </div>
+    <div>
+        <table id="conversation">
+            <thead>
+            <tr>
+                <th>Greetings</th>
+            </tr>
+            </thead>
+            <tbody id="greetings">
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

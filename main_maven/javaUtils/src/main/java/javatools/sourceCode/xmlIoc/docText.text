@@ -1,0 +1,20 @@
+ioc的顶层接口是BeanFactory（一级接口）
+HierarchicalBeanFactory、AutowireCapableBeanFactory和ListableBeanFactory （二级接口）
+
+XmlBeanFactory
+1、XmlBeanFactory通过Resource装载Spring配置信息冰启动IoC容器，然后就可以通过factory.getBean从IoC容器中获取Bean了。
+2、通过BeanFactory启动IoC容器时，并不会初始化配置文件中定义的Bean，初始化动作发生在第一个调用时。
+3、对于单实例（singleton）的Bean来说，BeanFactory会缓存Bean实例，所以第二次使用getBean时直接从IoC容器缓存中获取Bean。
+ApplicationContext
+BeanFactorty接口提供了配置框架及基本功能，但是无法支持spring的aop功能和web应用。而ApplicationContext接口作为BeanFactory的派生，
+因而提供BeanFactory所有的功能。而且ApplicationContext还在功能上做了扩展，相较于BeanFactorty，ApplicationContext还提供了以下的功能：
+（1）MessageSource, 提供国际化的消息访问
+（2）资源访问，如URL和文件
+（3）事件传播特性，即支持aop特性
+（4）载入多个（有继承关系）上下文 ，使得每一个上下文都专注于一个特定的层次，比如应用的web层
+
+加载过程：
+1、资源定位，生成一个ResourceLoader对象，DefaultResourceLoader类中 Resource getResource(String location)
+2、加载和注册，放入DefaultListableBeanFactory类中的Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap(256)
+3、依赖注入，通过getBean进行对象实例化
+

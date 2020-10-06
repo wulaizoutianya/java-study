@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dubbo.server.dao.CmUserBaseInfoDao">
+
+    <select id="queryUserInfoList" resultType="java.util.HashMap">
+        select u.id, u.user_en_name, u.user_ch_name
+        from cm_user_base_info u
+        where 1 = 1
+    </select>
+
+    <insert id="insertUserInfo" parameterType="java.util.HashMap" timeout="1">
+        insert into cm_user_base_info(user_en_name,
+                                      user_ch_name)
+        values (#{userEnName},
+                #{userChName})
+    </insert>
+
+</mapper>
